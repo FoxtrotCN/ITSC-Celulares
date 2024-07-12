@@ -5,7 +5,7 @@ services:
     image: postgres:13
     restart: always
     environment:
-      POSTGRES_DB: database-local
+      POSTGRES_DB: db-local
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres12345!'
     ports:
