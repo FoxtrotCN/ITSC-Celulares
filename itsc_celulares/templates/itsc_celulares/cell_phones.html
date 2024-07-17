@@ -1,0 +1,54 @@
+{% extends 'itsc_celulares/base.html' %}
+
+
+{% block content %}
+    <h3>Celulares</h3>
+        <style>
+    .users {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .btn {
+        margin-left: 1400px;
+    }
+
+    .btn-actions {
+        margin: 5px;
+        font-size: 1rem;
+
+    }
+
+    </style>
+
+    <a href="{% url 'new-cellphone' %}" class="btn btn-primary" role="button" aria-disabled="true">Nuevo</a>
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Marca</th>
+      <th scope="col">Modelo</th>
+      <th scope="col">Descripción del problema</th>
+      <th scope="col">Diagnostico</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for cellphone in cellphones %}
+      <tr>
+      <th scope="row">{{ cellphone.id }}</th>
+      <td>{{ cellphone.brand }}</td>
+      <td>{{ cellphone.model }}</td>
+      <td>{{ cellphone.problem_description }}</td>
+      <td>{{ cellphone.diagnosis }}</td>
+      <td>Recibido</td>
+
+{#      {% if technician.username.is_active %}#}
+{#      {% endif %}#}
+{#      <td><button type="button" class="btn btn-primary btn-actions">Ver</button><button type="button" class="btn btn-danger btn-actions">Eliminar</button></td>#}
+  {% endfor %}
+
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "itsc_celulares/base.html" %}
+{% block content %}
+     <style>
+        .container {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background: white;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline;
+            font-size: 1.5rem;
+            color: #4d4852;
+        }
+
+        .container h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .ticket {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background: #38b7ef;
+            width: 25%;
+
+        }
+
+        .ticket h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .ticket p {
+            margin: 5px 0;
+        }
+
+        .ticket button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .ticket button:hover {
+            background: #218838;
+        }
+    </style>
+
+    <div class="container">
+        {% if technician_repair_orders %}
+            {% for repair_order in technician_repair_orders %}
+            <div class="ticket" id="ticket-1">
+                <h2>Orden {{ repair_order.id }}</h2>
+                <p><strong>Cliente:</strong> {{ repair_order.device.customer.full_name }}</p>
+                <p><strong>Dispositivo:</strong> {{ repair_order.device.device_brand_model_str_rep }}</p>
+                <p><strong>Descripción del problema:</strong> {{ repair_order.device.problem_description }}</p>
+                <p><strong>Fecha de Asignación:</strong> {{ repair_order.date_created }}</p>
+                <button>Marcar como Resuelto</button>
+            </div>
+            {% endfor %}
+        {% else %}
+        <p>No posee Ordenes de reparacion</p>
+    {% endif %}
+    </div>
+{% endblock %}

@@ -1,6 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
+
+from itsc_celulares.models import *
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -16,7 +19,19 @@ class UserRegistrationForm(UserCreationForm):
         }
 
 
+class CustomerEntryForm(ModelForm):
+    class Meta:
+        model = Customer
+        fields = '__all__'
 
 
+class CellPhoneEntryForm(ModelForm):
+    class Meta:
+        model = CellPhone
+        fields = '__all__'
 
 
+class NewEntryForm(ModelForm):
+    class Meta:
+        model = RepairOrder
+        fields = '__all__'

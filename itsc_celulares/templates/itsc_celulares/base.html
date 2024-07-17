@@ -88,6 +88,7 @@
         <aside class="aside">
             <h5>ITSC Celulares</h5>
             <ul class="nav flex-column">
+                {% if request.user.is_staff %}
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'home' %}">Dashboard</a>
                 </li>
@@ -95,11 +96,20 @@
                     <a class="nav-link" href="{% url 'users' %}">Usuarios</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'customer' %}">Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cell-phone' %}">Celulares</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
                 </li>
             </ul>
         </aside>
         <div class="content">
+            <h1 style="text-align: right">Bienvenido, {{ request.user }}</h1>
+            <h2>{% if is_technician %}Ordenes de reparación{% else %}Activdad{% endif %}</h2>
             {% block content %}
             {% endblock %}
         </div>

@@ -1,6 +1,91 @@
 {% extends 'itsc_celulares/base.html' %}
 
-{% block content %}
 
-    <h1 style="text-align: right">Bienvenido, {{ request.user }}</h1>
+
+{% block content %}
+<style>
+
+.dashboard {
+    display: flex;
+    flex-direction: column; /* Cambia la dirección del flujo a columna */
+    align-items: center; /* Centra los recuadros horizontalmente */
+    gap: 10px; /* Espacio entre los recuadros */
+    width: 25%; /* Ajusta el ancho del contenedor principal */
+}
+
+.card {
+    width: 90%; /* Ajusta el ancho de cada recuadro */
+    border-radius: 10px;
+    padding: 15px; /* Aumenta el padding para hacer los recuadros más grandes */
+    color: #333;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1.5em; /* Aumenta el tamaño del texto del título */
+}
+
+.card p {
+    font-size: 2.5em; /* Aumenta el tamaño del texto del número */
+    margin: 10px 0 0;
+}
+
+/* Colores pastel basados en azul, verde y rojo */
+.received {
+    background-color: #a8dadc; /* Pastel azul */
+}
+
+.in-diagnosis {
+    background-color: #c3e6cb; /* Pastel verde */
+}
+
+.in-repair {
+    background-color: #f5c6cb; /* Pastel rojo */
+}
+
+.ready-for-delivery {
+    background-color: #d4edda; /* Pastel verde claro */
+}
+
+.delivered {
+    background-color: #cce5ff; /* Pastel azul claro */
+}
+
+
+
+</style>
+
+
+{#        Tabla De celulares con opción de actualizar estados perfil del tecnico#}
+
+        {% if request.user.is_staff %}
+            <a href="{% url 'new-entry' %}" class="btn btn-info" role="button" aria-disabled="true">Nueva Entrada</a>
+        <div class="dashboard">
+
+        <div class="card received">
+            <h3>Recibido</h3>
+            <p>{{ repair_orders_received }}</p>
+        </div>
+        <div class="card in-diagnosis">
+            <h3>En Diagnóstico</h3>
+            <p>{{ repair_orders_in_diagnosis }}</p>
+        </div>
+        <div class="card in-repair">
+            <h3>En Reparación</h3>
+            <p>{{ repair_orders_in_repair }}</p>
+        </div>
+        <div class="card ready-for-delivery">
+            <h3>Listo para Entrega</h3>
+            <p>{{ repair_orders_ready_for_delivery }}</p>
+        </div>
+        <div class="card delivered">
+            <h3>Entregado</h3>
+            <p>{{ repair_orders_delivered }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+
 {% endblock %}

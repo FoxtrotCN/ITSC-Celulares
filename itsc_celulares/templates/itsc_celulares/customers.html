@@ -1,0 +1,47 @@
+{% extends 'itsc_celulares/base.html' %}
+{% block content %}
+    <h3>Clientes</h3>
+        <style>
+    .users {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .btn {
+        margin-left: 1400px;
+    }
+
+    .btn-actions {
+        margin: 5px;
+        font-size: 1rem;
+
+    }
+
+    </style>
+
+    <a href="{% url 'new-customer' %}" class="btn btn-primary" role="button" aria-disabled="true">Nuevo</a>
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for customer in customers %}
+      <tr>
+      <th scope="row">{{ customer.id }}</th>
+      <td>{{ customer.first_name }}</td>
+      <td>{{ customer.last_name }}</td>
+       <td></td>
+{#      {% if technician.username.is_active %}#}
+{#      {% endif %}#}
+{#      <td><button type="button" class="btn btn-primary btn-actions">Ver</button><button type="button" class="btn btn-danger btn-actions">Eliminar</button></td>#}
+  {% endfor %}
+
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
