@@ -1,4 +1,6 @@
 {% extends "itsc_celulares/base.html" %}
+BUTTON_DISABLED_CLASS = "diagnosis-btn disabled"
+BUTTON_CLASS = "diagnosis-btn"
 {% block content %}
      <style>
         .container {
@@ -6,10 +8,9 @@
             overflow: hidden;
             background: white;
             margin-top: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: inline;
-            font-size: 1.5rem;
             color: #4d4852;
+            width: 100%;
         }
 
         .container h1 {
@@ -22,7 +23,7 @@
             padding: 10px;
             margin-bottom: 20px;
             border-radius: 5px;
-            background: #38b7ef;
+            background: #5fc5b2;
             width: 25%;
 
         }
@@ -37,14 +38,34 @@
         }
 
         .ticket button {
-            display: block;
-            width: 100%;
+            display: inline-block;
+
+            margin-top: 15px;
             padding: 10px;
             background: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        .ticket .diagnosis-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border: none;
+            cursor: pointer; /* Cambiar a 'pointer' si quieres que sea clickable */
+            border-radius: 4px;
+            text-align: center;
+
+        }
+
+
+
+        .ticket .btn:hover {
+            background-color: #4545a6;
         }
 
         .ticket button:hover {
@@ -57,15 +78,23 @@
             {% for repair_order in technician_repair_orders %}
             <div class="ticket" id="ticket-1">
                 <h2>Orden {{ repair_order.id }}</h2>
+                <p><strong>Status:</strong> {{ repair_order.get_order_status_display }}</p>
                 <p><strong>Cliente:</strong> {{ repair_order.device.customer.full_name }}</p>
                 <p><strong>Dispositivo:</strong> {{ repair_order.device.device_brand_model_str_rep }}</p>
                 <p><strong>Descripción del problema:</strong> {{ repair_order.device.problem_description }}</p>
+                <p><strong>Diagnóstico:</strong> {{ repair_order.device.diagnosis }}</p>
                 <p><strong>Fecha de Asignación:</strong> {{ repair_order.date_created }}</p>
-                <button>Marcar como Resuelto</button>
+                <a href="{% url 'diagnose-repair-order' repair_order.id %}"><button class="btn btn-info" {% if repair_order.order_status == "READY FOR DELIVERY" %}disabled{% endif %}>Diagnosticar</button></a>
+                <form method="POST" action="{% url 'mark-as-fixed' repair_order.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success" {% if repair_order.order_status == "READY FOR DELIVERY" %}disabled{% endif %}>Marcar como reparado</button>
+                </form>
+
             </div>
             {% endfor %}
         {% else %}
         <p>No posee Ordenes de reparacion</p>
     {% endif %}
     </div>
+
 {% endblock %}

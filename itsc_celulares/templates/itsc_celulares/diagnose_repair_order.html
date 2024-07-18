@@ -1,0 +1,23 @@
+{% extends 'itsc_celulares/base.html' %}
+{% block content %}
+    <style>
+    span {
+        display: flex;
+    }
+    input {
+        margin-top: 25px;
+    }
+
+
+    </style>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <span>Marca</span><span class="inner-span">{{ form.brand }}</span>
+        <span>Modelo</span> <span class="inner-span">{{ form.model }}</span>
+        <span>Numero de serie</span> <span class="inner-span">{{ form.serial_number }}</span>
+        <span>Descripcion del problema</span> <span class="inner-span">{{ form.problem_description }}</span>
+        <span>Diagnostico</span> <span class="inner-span">{{ form.diagnosis }}</span>
+        <span>Cliente</span> <span class="inner-span">{{ form.customer }}</span>
+    <input type="submit" value="Guardar" class="submit-button">
+    </form>
+{% endblock %}

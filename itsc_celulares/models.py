@@ -67,3 +67,5 @@ class RepairOrder(models.Model):
 
     def __str__(self):
         return f"{self.device.brand} - {self.device.customer}"
+
+

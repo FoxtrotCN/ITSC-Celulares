@@ -13,5 +13,7 @@ urlpatterns = [
     path('cell-phones/', views.cell_phone, name="cell-phone"),
     path('cell-phones/new', views.new_cellphone_entry, name="new-cellphone"),
     path('new-entry/', views.new_entry, name="new-entry"),
-    path('technician/', views.technician_page, name="technician-page")
+    path('technician/', views.technician_page, name="technician-page"),
+    path('technician/repair-order/<str:pk>', views.diagnose_repair_order, name="diagnose-repair-order"),
+    path('technician/repair-order/<str:pk>/fixed', views.mark_as_fixed, name="mark-as-fixed"),
 ]

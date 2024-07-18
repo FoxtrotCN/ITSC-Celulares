@@ -37,11 +37,11 @@ def logout_user(request):
 @admin_only
 def home(request):
     repair_orders = RepairOrder.objects.all()
-    print(repair_orders)
     repair_orders_received = repair_orders.filter(order_status="RECEIVED").count()
-    repair_orders_in_diagnosis = repair_orders.filter(order_status="IN_DIAGNOSIS").count()
-    repair_orders_in_repair = repair_orders.filter(order_status="IN_REPAIR").count()
-    repair_orders_ready_for_delivery = repair_orders.filter(order_status="READY_FOR_DELIVERY").count()
+    repair_orders_in_diagnosis = repair_orders.filter(order_status="IN DIAGNOSIS").count()
+    print(repair_orders_in_diagnosis)
+    repair_orders_in_repair = repair_orders.filter(order_status="IN REPAIR").count()
+    repair_orders_ready_for_delivery = repair_orders.filter(order_status="READY FOR DELIVERY").count()
     repair_orders_delivered = repair_orders.filter(order_status="DELIVERED").count()
     context = {
         'repair_orders': repair_orders,
@@ -51,7 +51,7 @@ def home(request):
         'repair_orders_ready_for_delivery': repair_orders_ready_for_delivery,
         'repair_orders_delivered': repair_orders_delivered,
     }
-    print(context)
+
     return render(request, "itsc_celulares/dashboard.html", context)
 
 
@@ -91,7 +91,7 @@ def new_customer_entry(request):
         customer_form = CustomerEntryForm(request.POST)
         if customer_form.is_valid():
             customer_form.save()
-            return redirect('cell-phone')
+            return redirect('new-cellphone')
     context = {'form': customer_form}
     return render(request, "itsc_celulares/new_customer_entry.html", context)
 
@@ -131,7 +131,6 @@ def technician_page(request):
     technician_id = request.user.technician.id
     repair_orders = RepairOrder.objects.all()
     technician_repair_orders = repair_orders.filter(technician_id=technician_id)
-    print(technician_repair_orders)
 
     context = {
         'is_technician': is_technician,
@@ -139,3 +138,38 @@ def technician_page(request):
         'technician_repair_orders': technician_repair_orders,
     }
     return render(request, "itsc_celulares/technican_page.html", context)
+
+
+def diagnose_repair_order(request, pk):
+    repair_order = RepairOrder.objects.get(id=pk)
+    device = CellPhone.objects.get(id=repair_order.device.id)
+    print(device)
+    form = CellPhoneEntryForm(instance=device)
+    if request.method == "POST":
+        form = CellPhoneEntryForm(request.POST, instance=device)
+        if form.is_valid():
+            repair_order.order_status = "IN DIAGNOSIS"
+            repair_order.save()
+            form.save()
+
+            return redirect('technician-page')
+
+    context = {'form': form}
+    form.fields['brand'].widget.attrs['readonly'] = True
+    form.fields['model'].widget.attrs['readonly'] = True
+    form.fields['serial_number'].widget.attrs['readonly'] = True
+    form.fields['problem_description'].widget.attrs['readonly'] = True
+    form.fields['customer'].widget.attrs['readonly'] = True
+
+    return render(request, "itsc_celulares/diagnose_repair_order.html", context)
+
+
+def mark_as_fixed(request, pk):
+    repair_order = RepairOrder.objects.get(id=pk)
+    if request.method == "POST":
+        repair_order.order_status = "READY FOR DELIVERY"
+        repair_order.save()
+        return redirect('technician-page')
+
+    return render(request, "itsc_celulares/technican_page.html")
+
