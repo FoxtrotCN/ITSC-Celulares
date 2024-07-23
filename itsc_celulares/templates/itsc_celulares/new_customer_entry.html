@@ -1,5 +1,7 @@
 {% extends 'itsc_celulares/base.html' %}
 {% block content %}
+    <h2>Entrada de cliente</h2>
+
     <form method="POST" action="">
     {% csrf_token %}
         {{ form.as_p }}

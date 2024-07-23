@@ -1,22 +1,14 @@
 {% extends 'itsc_celulares/base.html' %}
 {% block content %}
-    <h3>Clientes</h3>
-        <style>
-    .users {
-        font-size: 20px;
-        font-weight: bold;
-    }
-    .btn {
-        margin-left: 1400px;
-    }
+    <style>
 
-    .btn-actions {
-        margin: 5px;
-        font-size: 1rem;
-
-    }
+        .btn {
+            margin-left: 1400px;
+        }
 
     </style>
+
+    <h3>Clientes</h3>
 
     <a href="{% url 'new-customer' %}" class="btn btn-primary" role="button" aria-disabled="true">Nuevo</a>
 

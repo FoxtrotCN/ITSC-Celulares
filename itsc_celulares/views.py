@@ -71,9 +71,11 @@ def register_new_user(request):
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            print(user)
+            form.save()
             return redirect('users')
+        else:
+            for error in form.errors.values():
+                messages.error(request, error)
 
     context = {'form': form}
     return render(request, "itsc_celulares/register_new_user.html", context)
@@ -172,4 +174,3 @@ def mark_as_fixed(request, pk):
         return redirect('technician-page')
 
     return render(request, "itsc_celulares/technican_page.html")
-
