@@ -1,8 +1,79 @@
 {% extends 'itsc_celulares/base.html' %}
 {% block content %}
-    <form method="POST" action="">
-    {% csrf_token %}
-        {{ form.as_p }}
-    <input type="submit" value="Guardar" class="submit-button">
+
+    <style>
+
+        h2 {
+            color: #b60618; /* Color verde */
+        }
+
+        .form-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9; /* Fondo gris claro */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container label {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-container select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #fff; /* Fondo blanco */
+            color: #333; /* Texto gris oscuro */
+        }
+
+        .form-container select {
+            appearance: none; /* Elimina los estilos predeterminados del navegador */
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Agrega una flecha personalizada */
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            padding-right: 30px; /* Espacio para la flecha personalizada */
+        }
+
+
+        .submit-button {
+            background-color: #0f08c4; /* Color verde */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            max-width: 50%; /* Ancho máximo del 50% */
+            margin: 0 auto; /* Centrando el botón */
+        }
+
+        .submit-button:hover {
+            background-color: #3467d2;
+        }
+
+    </style>
+
+    <h2>Nueva orden de reparacion</h2>
+    <div class="form-container">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <input type="submit" value="Guardar" class="submit-button">
     </form>
+    </div>
+
 {% endblock %}

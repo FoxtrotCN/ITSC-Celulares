@@ -94,6 +94,11 @@ def new_customer_entry(request):
         if customer_form.is_valid():
             customer_form.save()
             return redirect('new-cellphone')
+
+        else:
+            for error in customer_form.errors.values():
+                messages.error(request, error)
+
     context = {'form': customer_form}
     return render(request, "itsc_celulares/new_customer_entry.html", context)
 
@@ -145,7 +150,6 @@ def technician_page(request):
 def diagnose_repair_order(request, pk):
     repair_order = RepairOrder.objects.get(id=pk)
     device = CellPhone.objects.get(id=repair_order.device.id)
-    print(device)
     form = CellPhoneEntryForm(instance=device)
     if request.method == "POST":
         form = CellPhoneEntryForm(request.POST, instance=device)

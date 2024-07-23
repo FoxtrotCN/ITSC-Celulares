@@ -1,11 +1,71 @@
 {% extends 'itsc_celulares/base.html' %}
 {% block content %}
+    <style>
+        h2 {
+            color: #de0505; /* Color verde */
+        }
+
+        .form-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9; /* Fondo gris claro */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container label {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="email"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .submit-button {
+            margin: 0 auto;
+            background-color: #07218d; /* Color verde */
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px;
+        }
+
+        .submit-button:hover {
+            background-color: #715fe7;
+        }
+
+    </style>
+
+    {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h2>Entrada de cliente</h2>
 
-    <form method="POST" action="">
-    {% csrf_token %}
-        {{ form.as_p }}
-    <input type="submit" value="Guardar" class="submit-button">
-    </form>
+    <div class="form-container">
+        <form method="POST" action="">
+        {% csrf_token %}
+            {{ form.as_p }}
+        <input type="submit" value="Guardar" class="submit-button">
+        </form>
+    </div>
+
 
 {% endblock %}

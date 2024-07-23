@@ -1,80 +1,67 @@
 {% extends "itsc_celulares/base.html" %}
-BUTTON_DISABLED_CLASS = "diagnosis-btn disabled"
-BUTTON_CLASS = "diagnosis-btn"
 {% block content %}
      <style>
-        .container {
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-            background: white;
-            margin-top: 20px;
-            display: inline;
-            color: #4d4852;
-            width: 100%;
-        }
-
-        .container h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        .ticket {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            background: #5fc5b2;
-            width: 25%;
-
-        }
-
-        .ticket h2 {
-            margin: 0;
-            color: #333;
-        }
-
-        .ticket p {
-            margin: 5px 0;
-        }
-
-        .ticket button {
-            display: inline-block;
-
-            margin-top: 15px;
-            padding: 10px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .ticket .diagnosis-btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border: none;
-            cursor: pointer; /* Cambiar a 'pointer' si quieres que sea clickable */
-            border-radius: 4px;
-            text-align: center;
-
-        }
+  .container {
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+        background: white;
+        margin-top: 100px;
+        display: flex;
+        flex-wrap: wrap;
+        color: #4d4852;
+        width: 100%;
+        justify-content: space-evenly;
+    }
 
 
+    .ticket {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        background: #d3eaff; /* Azul pastel */
+        width: 30%;
+        box-sizing: border-box;
+    }
 
-        .ticket .btn:hover {
-            background-color: #4545a6;
-        }
+    .ticket h2 {
+        margin: 0;
+        color: #333;
+    }
 
-        .ticket button:hover {
-            background: #218838;
-        }
-    </style>
+    .ticket p {
+        margin: 5px 0;
+    }
 
+    .ticket button {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px;
+        background: #0e836a; /* Rojo pastel */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .ticket .btn-info,
+    .btn-success {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #169ede; /* Azul pastel */
+        color: white;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+</style>
+
+    <h2>Ordenes de reparación</h2>
     <div class="container">
-        <h2>Ordenes de reparación</h2>
+
         {% if technician_repair_orders %}
             {% for repair_order in technician_repair_orders %}
             <div class="ticket" id="ticket-1">
@@ -84,7 +71,7 @@ BUTTON_CLASS = "diagnosis-btn"
                 <p><strong>Dispositivo:</strong> {{ repair_order.device.device_brand_model_str_rep }}</p>
                 <p><strong>Descripción del problema:</strong> {{ repair_order.device.problem_description }}</p>
                 <p><strong>Diagnóstico:</strong> {{ repair_order.device.diagnosis }}</p>
-                <p><strong>Fecha de Asignación:</strong> {{ repair_order.date_created }}</p>
+                <p><strong>Fecha de Asignación:</strong> {{ repair_order.date_created | date:"d-m-Y" }}</p>
                 <a href="{% url 'diagnose-repair-order' repair_order.id %}"><button class="btn btn-info" {% if repair_order.order_status == "READY FOR DELIVERY" %}disabled{% endif %}>Diagnosticar</button></a>
                 <form method="POST" action="{% url 'mark-as-fixed' repair_order.id %}">
                     {% csrf_token %}

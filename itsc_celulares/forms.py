@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -50,6 +52,22 @@ class CustomerEntryForm(ModelForm):
             "secondary_phone_number": _("Número de telefono secundario"),
             "email": _("Correo electrónico"),
         }
+
+    def clean_primary_phone_number(self):
+        primary_phone_number = self.cleaned_data.get('primary_phone_number')
+        # secondary_phone_number = self.cleaned_data.get('secondary_phone_number')
+        phone_number_regex = re.compile(r'(^[0-9]{7}$|^[0-9]{10}$)')
+        if not phone_number_regex.match(primary_phone_number):
+            raise forms.ValidationError("Debe introducir un numero de telefono valido.")
+
+        return primary_phone_number
+
+    def clean_secondary_phone_number(self):
+        secondary_phone_number = self.cleaned_data.get('secondary_phone_number')
+        phone_number_regex = re.compile(r'(^[0-9]{7}$|^[0-9]{10}$)')
+        if not phone_number_regex.match(secondary_phone_number):
+            raise forms.ValidationError("Debe introducir un numero de telefono valido.")
+        return secondary_phone_number
 
 
 class CellPhoneEntryForm(ModelForm):
