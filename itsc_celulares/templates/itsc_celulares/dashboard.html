@@ -7,10 +7,11 @@
 
 .dashboard {
     display: flex;
-    flex-direction: column; /* Cambia la dirección del flujo a columna */
-    align-items: center; /* Centra los recuadros horizontalmente */
+    {#flex-direction: column; /* Cambia la dirección del flujo a columna */#}
+    {#align-items: center; /* Centra los recuadros horizontalmente */#}
     gap: 10px; /* Espacio entre los recuadros */
-    width: 25%; /* Ajusta el ancho del contenedor principal */
+    width: 100%; /* Ajusta el ancho del contenedor principal */
+    margin-top: 50px;
 }
 
 .card {
@@ -53,6 +54,26 @@
     background-color: #cce5ff; /* Pastel azul claro */
 }
 
+.new-entry-container{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+#new-entry {
+     display: inline-block;  /* Permite ajustar el ancho y alto */
+    padding: 10px 20px;     /* Espacio alrededor del texto */
+    text-decoration: none;  /* Quitar subrayado del enlace */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white;           /* Color del texto */
+    border: 1px solid #007bff; /* Borde del botón */
+    border-radius: 4px;     /* Borde redondeado */
+    font-size: 16px;        /* Tamaño del texto */
+    text-align: center;     /* Alineación del texto */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+
 
 
 </style>
@@ -62,7 +83,10 @@
 
         {% if request.user.is_staff %}
             <h2>Actividad</h2>
-            <a href="{% url 'new-customer' %}" class="btn btn-info" role="button" aria-disabled="true">Nueva Entrada</a>
+            <div class="new-entry-container">
+            <a href="{% url 'new-customer' %}" class="btn btn-info" id="new-entry" role="button" aria-disabled="true">Nueva Entrada</a>
+            </div>
+
         <div class="dashboard">
 
         <div class="card received">

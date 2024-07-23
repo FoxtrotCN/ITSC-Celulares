@@ -81,12 +81,16 @@ def register_new_user(request):
     return render(request, "itsc_celulares/register_new_user.html", context)
 
 
+@login_required(login_url='login')
+@admin_only
 def customer(request):
     customers = Customer.objects.all()
     context = {'customers': customers}
     return render(request, "itsc_celulares/customers.html", context)
 
 
+@login_required(login_url='login')
+@admin_only
 def new_customer_entry(request):
     customer_form = CustomerEntryForm()
     if request.method == "POST":
@@ -103,12 +107,16 @@ def new_customer_entry(request):
     return render(request, "itsc_celulares/new_customer_entry.html", context)
 
 
+@login_required(login_url='login')
+@admin_only
 def cell_phone(request):
     cellphones = CellPhone.objects.all()
     context = {'cellphones': cellphones}
     return render(request, "itsc_celulares/cell_phones.html", context)
 
 
+@login_required(login_url='login')
+@admin_only
 def new_cellphone_entry(request):
     cellphone_form = CellPhoneEntryForm()
     if request.method == "POST":
@@ -120,6 +128,8 @@ def new_cellphone_entry(request):
     return render(request, "itsc_celulares/new_cell_phone_entry.html", context)
 
 
+@login_required(login_url='login')
+@admin_only
 def new_entry(request):
     form = NewEntryForm()
     if request.method == "POST":
@@ -147,6 +157,8 @@ def technician_page(request):
     return render(request, "itsc_celulares/technican_page.html", context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['technician'])
 def diagnose_repair_order(request, pk):
     repair_order = RepairOrder.objects.get(id=pk)
     device = CellPhone.objects.get(id=repair_order.device.id)
@@ -170,6 +182,8 @@ def diagnose_repair_order(request, pk):
     return render(request, "itsc_celulares/diagnose_repair_order.html", context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['technician'])
 def mark_as_fixed(request, pk):
     repair_order = RepairOrder.objects.get(id=pk)
     if request.method == "POST":
@@ -178,3 +192,9 @@ def mark_as_fixed(request, pk):
         return redirect('technician-page')
 
     return render(request, "itsc_celulares/technican_page.html")
+
+
+def tickets(request):
+    repair_orders = RepairOrder.objects.all()
+    context = {'repair_orders': repair_orders}
+    return render(request, "itsc_celulares/tickets.html", context)

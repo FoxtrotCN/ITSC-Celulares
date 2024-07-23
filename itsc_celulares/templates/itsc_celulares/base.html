@@ -101,10 +101,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'cell-phone' %}">Celulares</a>
                 </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tickets' %}">Tickets</a>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'technician-page' %}">Tickets</a>
                 </li>
+                {% endif %}
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
                 </li>
