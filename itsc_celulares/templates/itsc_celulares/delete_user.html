@@ -1,0 +1,18 @@
+{% extends "itsc_celulares/base.html" %}
+{% block content %}
+        <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <p>Are you sure you want to delete "{{ user }}"?</p>
+
+                <form action="{% url 'remove-user' user.id %}" method="POST">
+                    {% csrf_token %}
+                    <a href="{% url 'users' %}">Cancelar</a>
+
+                    <input type="submit" name="Confirmar">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

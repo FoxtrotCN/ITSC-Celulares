@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class Technician(models.Model):
-    username = models.OneToOneField(User, null=False, blank=False, on_delete=models.DO_NOTHING)
+    username = models.OneToOneField(User, null=True, blank=False, on_delete=models.SET_NULL)
     first_name = models.CharField(max_length=100, null=False)
     last_name = models.CharField(max_length=100, null=False)
     phone = models.CharField(max_length=20, null=True)
@@ -60,7 +60,7 @@ class RepairOrder(models.Model):
         (DELIVERED, "Entregado")
     ]
 
-    technician = models.ForeignKey(Technician, on_delete=models.DO_NOTHING)
+    technician = models.ForeignKey(Technician, models.SET_NULL, null=True)
     device = models.ForeignKey(CellPhone, on_delete=models.DO_NOTHING)
     date_created = models.DateTimeField(auto_now_add=True)
     order_status = models.CharField(max_length=100, choices=REPAIR_ORDER_STATUS, default=RECEIVED)

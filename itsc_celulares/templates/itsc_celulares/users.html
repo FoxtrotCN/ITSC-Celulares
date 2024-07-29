@@ -9,11 +9,11 @@
         margin-left: 1400px;
     }
 
-    .btn-actions {
-        margin: 5px;
-        font-size: 1rem;
-
+    #delete-btn {
+        margin: 0;
     }
+
+
 
     </style>
 <p class="users">Usuarios Activos</p>
@@ -40,7 +40,7 @@
       {% if technician.username.is_active %}
       <td>Activo</td>
       {% endif %}
-      <td><button type="button" class="btn btn-primary btn-actions">Ver</button><button type="button" class="btn btn-danger btn-actions">Eliminar</button></td>
+      <td><a id="delete-btn" class="btn btn-danger" href="{% url 'remove-user' technician.id %}" role="button">Eliminar</a></td>
   {% endfor %}
 
     </tr>

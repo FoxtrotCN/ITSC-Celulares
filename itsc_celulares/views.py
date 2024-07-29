@@ -13,6 +13,7 @@ from .decorators import *
 # Create your views here.
 
 @unauthenticated_user
+# @allowed_users(allowed_roles=['admin', 'technician'])
 def login_page(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -39,7 +40,6 @@ def home(request):
     repair_orders = RepairOrder.objects.all()
     repair_orders_received = repair_orders.filter(order_status="RECEIVED").count()
     repair_orders_in_diagnosis = repair_orders.filter(order_status="IN DIAGNOSIS").count()
-    print(repair_orders_in_diagnosis)
     repair_orders_in_repair = repair_orders.filter(order_status="IN REPAIR").count()
     repair_orders_ready_for_delivery = repair_orders.filter(order_status="READY FOR DELIVERY").count()
     repair_orders_delivered = repair_orders.filter(order_status="DELIVERED").count()
@@ -110,8 +110,10 @@ def new_customer_entry(request):
 @login_required(login_url='login')
 @admin_only
 def cell_phone(request):
-    cellphones = CellPhone.objects.all()
-    context = {'cellphones': cellphones}
+
+    repair_order_cellphones = RepairOrder.objects.select_related('device').all()
+
+    context = {'repair_order_cellphones': repair_order_cellphones}
     return render(request, "itsc_celulares/cell_phones.html", context)
 
 
@@ -198,3 +200,29 @@ def tickets(request):
     repair_orders = RepairOrder.objects.all()
     context = {'repair_orders': repair_orders}
     return render(request, "itsc_celulares/tickets.html", context)
+
+
+def remove_user(request, pk):
+    user = Technician.objects.get(id=pk)
+
+    if request.method == "POST":
+        user.delete()
+
+        return redirect('users')
+
+    context = {'user': user}
+
+    return render(request, "itsc_celulares/delete_user.html", context)
+
+
+def mark_as_delivered(request, pk):
+    repair_order = RepairOrder.objects.get(id=pk)
+
+    if request.method == "POST":
+        repair_order.order_status = "DELIVERED"
+        repair_order.save()
+
+        return redirect('cell-phone')
+
+    return render(request, "itsc_celulares/cell_phones.html")
+
