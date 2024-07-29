@@ -110,7 +110,6 @@ def new_customer_entry(request):
 @login_required(login_url='login')
 @admin_only
 def cell_phone(request):
-
     repair_order_cellphones = RepairOrder.objects.select_related('device').all()
 
     context = {'repair_order_cellphones': repair_order_cellphones}
@@ -206,6 +205,8 @@ def remove_user(request, pk):
     user = Technician.objects.get(id=pk)
 
     if request.method == "POST":
+        user.username.is_active = False
+        user.username.save()
         user.delete()
 
         return redirect('users')
@@ -225,4 +226,3 @@ def mark_as_delivered(request, pk):
         return redirect('cell-phone')
 
     return render(request, "itsc_celulares/cell_phones.html")
-
