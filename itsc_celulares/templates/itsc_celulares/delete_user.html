@@ -1,18 +1,77 @@
 {% extends "itsc_celulares/base.html" %}
 {% block content %}
-        <div class="row">
-        <div class="col-md-6">
-            <div class="card card-body">
-                <p>Are you sure you want to delete "{{ user }}"?</p>
 
-                <form action="{% url 'remove-user' user.id %}" method="POST">
-                    {% csrf_token %}
-                    <a href="{% url 'users' %}">Cancelar</a>
+    <style>
+        <style>
+  /* Contenedor de la alerta */
+  .alert-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la vista */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; /* Asegúrate de que esté por encima de otros elementos */
+  }
 
-                    <input type="submit" name="Confirmar">
-                </form>
-            </div>
-        </div>
+  /* Caja de alerta */
+  .alert-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Estilo del texto */
+  .alert-box p {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  /* Botones */
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 10px;
+  }
+
+  .btn-cancel {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-cancel:hover {
+    background-color: #5a6268;
+  }
+
+  .btn-confirm {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn-confirm:hover {
+    background-color: #c82333;
+  }
+</style>
+
+<div class="alert-container">
+    <div class="alert-box">
+        <p>¿Seguro que deseas eliminar al usuario "{{ user.username }}"?</p>
+        <form action="{% url 'remove-user' user.id %}" method="POST">
+            {% csrf_token %}
+            <a href="{% url 'users' %}"><button type="button" class="btn btn-cancel">Cancelar</button></a>
+            <input type="submit" class="btn btn-confirm" value="Confirmar">
+        </form>
     </div>
+</div>
 
 {% endblock %}
