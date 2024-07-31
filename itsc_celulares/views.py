@@ -226,3 +226,7 @@ def mark_as_delivered(request, pk):
         return redirect('cell-phone')
 
     return render(request, "itsc_celulares/cell_phones.html")
+
+
+def password_forgotten(request):
+    return render(request, "itsc_celulares/password_forgotten.html")
