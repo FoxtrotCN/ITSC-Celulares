@@ -88,31 +88,27 @@
         <aside class="aside">
             <h5>ITSC Celulares</h5>
             <ul class="nav flex-column">
-            {% with request.resolver_match.url_name as url_name %}
                 {% if request.user.is_staff %}
-
                 <li class="nav-item">
-                    <a class="nav-link {% if url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Dashboard</a>
+                    <a class="nav-link active" href="{% url 'home' %}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if url_name == 'users' %}active{% endif %}" href="{% url 'users' %}">Usuarios</a>
+                    <a class="nav-link" href="{% url 'users' %}">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if url_name == 'customer' %}active{% endif %}" href="{% url 'customer' %}">Clientes</a>
+                    <a class="nav-link" href="{% url 'customer' %}">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if url_name == 'cell-phone' %}active{% endif %}" href="{% url 'cell-phone' %}">Celulares</a>
+                    <a class="nav-link" href="{% url 'cell-phone' %}">Celulares</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if url_name == 'tickets' %}active{% endif %}" href="{% url 'tickets' %}">Tickets</a>
+                    <a class="nav-link" href="{% url 'tickets' %}">Tickets</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link {% if url_name == 'technician-page' %}active{% endif %}" href="{% url 'technician-page' %}">Tickets</a>
+                    <a class="nav-link" href="{% url 'technician-page' %}">Tickets</a>
                 </li>
                 {% endif %}
-            {% endwith %}
-
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
